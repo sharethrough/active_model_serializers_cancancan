@@ -8,6 +8,7 @@ require 'active_model_serializers_cancancan'
 Mongoid.configure do |config|
   config.connect_to "ams-test"
 end
+Mongo::Logger.logger.level = ::Logger::FATAL
 
 class User
   include Mongoid::Document

@@ -3,7 +3,7 @@ module ActiveModel
     module CanCan
       module Helpers
         def current_ability
-          Ability.new(options[:scope])
+          Ability.new(instance_options[:scope])
         end
 
         def can?(*args)
