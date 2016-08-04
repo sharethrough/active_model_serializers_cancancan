@@ -113,4 +113,42 @@ describe ActiveModel::Serializer::Associations do
     end
   end
 
+  context 'when serializing has_many current_user should be available' do
+    before do
+      Object.send(:remove_const, :CategorySerializer) if defined?(CategorySerializer)
+      Object.send(:remove_const, :ProjectSerializer) if defined?(ProjectSerializer)
+      Object.send(:remove_const, :Ability) if defined?(Ability)
+
+      CategorySerializer = Class.new(ActiveModel::Serializer) do
+        attributes :id
+        has_many :projects
+        has_one :project
+      end
+
+      ProjectSerializer = Class.new(ActiveModel::Serializer) do
+        attributes :id
+        def id
+          if current_user.nil?
+            nil
+          else
+            current_user.id
+          end
+        end
+      end
+
+      Ability = Class.new do
+        include CanCan::Ability
+        def initialize(user)
+          can :read, :category
+          can :read, :project
+        end
+      end
+
+    end
+
+    it 'should serialize authorized has_one records' do
+      expect(CategorySerializer.new(category, scope: User.find(2)).serializable_hash[:project]).to_not be_nil
+      expect(CategorySerializer.new(category, scope: User.find(2)).serializable_hash[:project][:id]).to eq 2
+    end
+  end
 end

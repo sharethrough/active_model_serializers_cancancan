@@ -6,6 +6,10 @@ module ActiveModel
           Ability.new(instance_options[:scope])
         end
 
+        def current_user
+          instance_options[:scope]
+        end
+
         def can?(*args)
           current_ability.can? *args
         end
