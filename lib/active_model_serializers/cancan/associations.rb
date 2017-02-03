@@ -7,8 +7,8 @@ module ActiveModel
         !!options[:authorize]
       end
 
-      def value_with_cancan(serializer)
-        val = value_without_cancan(serializer)
+      def value_with_cancan(serializer, include_slice)
+        val = value_without_cancan(serializer, include_slice)
         unless authorize?
           return val
         end

@@ -21,30 +21,30 @@ end
 
 class Project
   include Mongoid::Document
-  belongs_to :user
-  belongs_to :category
+  belongs_to :user, required: false
+  belongs_to :category, required: false
   has_many :categories
 end
 
 class Category
   include Mongoid::Document
-  belongs_to :user
-  belongs_to :project
+  belongs_to :user, required: false
+  belongs_to :project, required: false
   has_many :projects
 end
 
 RSpec.configure do |config|
-  config.before do
-    user1 = User.create(id: 1, name: "User1")
-    user2 = User.create(id: 2, name: "User2")
+  config.before(:each) do
+    user1 = User.create!(id: 1, name: "User1")
+    user2 = User.create!(id: 2, name: "User2")
 
-    c = Category.create(project: Project.create(user: user2))
+    c = Category.create!(project: Project.create!(user: user2))
 
-    Project.create(user: user1, category: c)
-    Project.create(user: user2, category: c)
+    Project.create!(user: user1, category: c)
+    Project.create!(user: user2, category: c)
   end
 
-  config.after do
+  config.after(:each) do
     User.delete_all
     Project.delete_all
     Category.delete_all

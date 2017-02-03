@@ -94,7 +94,7 @@ describe ActiveModel::Serializer::Associations do
         def initialize(user)
           can :read, Category
           can :read, Project do |pr|
-            pr.user == user
+            pr.user.id == user.id
           end
         end
       end
