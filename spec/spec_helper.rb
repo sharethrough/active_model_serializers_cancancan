@@ -5,6 +5,8 @@ Bundler.require(:default, :test)
 require 'mongoid'
 require 'active_model_serializers_cancancan'
 
+require 'rspec/its'
+
 Mongoid.configure do |config|
   config.connect_to "ams-test"
 end
@@ -33,7 +35,7 @@ end
 
 RSpec.configure do |config|
   config.before do
-    user1 = User.create(id: 1, name: "User1") 
+    user1 = User.create(id: 1, name: "User1")
     user2 = User.create(id: 2, name: "User2")
 
     c = Category.create(project: Project.create(user: user2))

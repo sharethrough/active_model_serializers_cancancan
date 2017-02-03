@@ -27,14 +27,19 @@ describe ActiveModel::Serializer::CanCan::Abilities do
 
         def can_bar?
           cannot? :read, Category
-        end        
+        end
       end
     end
 
     let(:category_serializer) { serializer.new(category, scope: user) }
 
     context 'serializable_hash' do
-      subject { category_serializer.serializable_hash }
+      subject {
+        p category_serializer
+        p category_serializer.serializable_hash
+        p '123'
+        category_serializer.serializable_hash
+      }
       its(:keys) { should eq [:id, :can] }
     end
 
