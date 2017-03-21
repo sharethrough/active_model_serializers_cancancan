@@ -25,4 +25,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec-its'
   gem.add_development_dependency 'pry'
   gem.add_development_dependency 'mongoid', '~> 6'
+  gem.add_development_dependency 'rails', '~> 5.1.0.rc1'
 end
